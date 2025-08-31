@@ -722,7 +722,7 @@ img {
 }
   </style>
 
-  <title>LoopMotion Dashboard</title>
+  <title>LoopMotion.io Dashboard</title>
 </head>
 
 <body>
@@ -1020,7 +1020,7 @@ img {
 <input class="range api None" type="range" name="aRange12" data-type="int32" data-key="12"
   onchange="valueChangedHandler(this)"
 
-        min="" max="" oninput="this.form.aInput12.value=this.value" />
+        min="1" max="100" oninput="this.form.aInput12.value=this.value" />
     </form>
 
   </div>
@@ -1054,7 +1054,7 @@ img {
 <input class="range api None" type="range" name="aRange13" data-type="int32" data-key="13"
   onchange="valueChangedHandler(this)"
 
-        min="" max="" oninput="this.form.aInput13.value=this.value" />
+        min="1" max="100" oninput="this.form.aInput13.value=this.value" />
     </form>
 
   </div>
@@ -1348,7 +1348,7 @@ img {
 <input class="range api None" type="range" name="aRange42" data-type="int32" data-key="42"
   onchange="valueChangedHandler(this)"
 
-        min="" max="" oninput="this.form.aInput42.value=this.value" />
+        min="1" max="100" oninput="this.form.aInput42.value=this.value" />
     </form>
 
   </div>
@@ -1382,7 +1382,7 @@ img {
 <input class="range api None" type="range" name="aRange43" data-type="int32" data-key="43"
   onchange="valueChangedHandler(this)"
 
-        min="" max="" oninput="this.form.aInput43.value=this.value" />
+        min="1" max="100" oninput="this.form.aInput43.value=this.value" />
     </form>
 
   </div>
@@ -1555,7 +1555,7 @@ img {
 <input class="range api None" type="range" name="aRange77" data-type="uint16" data-key="77"
   onchange="valueChangedHandler(this)"
 
-        min="0" max="3000" oninput="this.form.aInput77.value=this.value" />
+        min="0" max="1024" oninput="this.form.aInput77.value=this.value" />
     </form>
 
   </div>
@@ -1671,12 +1671,12 @@ img {
 
   
     
-<label class="label-inline None"> Running FW version:</label>
+<label class=" None"> Running FW version</label>
 
     
-<input class="content api None" type="text" name="name78" data-type="uint16" data-key="78"
+<input class="api None" type="text" name="name78" data-type="uint16" data-key="78"
   onchange="valueChangedHandler(this)"
-  />
+ data-fw-ver readonly />
 
   
 
@@ -1809,7 +1809,7 @@ async function connectHandler() {
     return;
 
   var devices = await navigator.hid.requestDevice({
-    filters: [{ vendorId: 0x1209, productId: 0xc000, usagePage: 0xff00, usage: 0x10 }]
+    filters: [{ vendorId: 0x2e8a, productId: 0x107c, usagePage: 0xff00, usage: 0x10 }]
   });
 
   device = devices[0];
@@ -1871,6 +1871,13 @@ function updateElement(key, event) {
 
     if (element.hasAttribute('data-hex'))
       setValue(element, parseInt(value).toString(16));
+
+    if (element.hasAttribute('data-fw-ver')) {
+      /* u16 version = major * 1000 + minor + 100; */
+      const major = Math.floor((value - 100) / 1000);
+      const minor = (value - 100) % 1000;
+      setValue(element, `v${major}.${minor}`);
+    }
   }
 }
 

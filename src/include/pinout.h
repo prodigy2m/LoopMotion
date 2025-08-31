@@ -21,7 +21,7 @@
  *  GPIO Pins (LED, USB)
  *==============================================================================*/
 
-#define GPIO_LED_PIN   25 // LED is connected to pin 25 on a PICO
+#define GPIO_LED_PIN   18 // LED is connected to pin 25 on a PICO
 #define PIO_USB_DP_PIN 14 // D+ is pin 14, D- is pin 15
 
 /*==============================================================================
