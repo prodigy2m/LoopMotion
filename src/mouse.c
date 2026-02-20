@@ -4,6 +4,8 @@
 #define MACOS_SWITCH_MOVE_X 10
 #define MACOS_SWITCH_MOVE_COUNT 5
 #define ACCEL_POINTS 7
+#define WINDOWS_RELATIVE_DIVISOR 16
+
 
 /* Check if our upcoming mouse movement would result in having to switch outputs */
 enum screen_pos_e is_screen_switch_needed(int position, int offset) {
@@ -251,6 +253,7 @@ void extract_report_values(uint8_t *raw_report, int len, device_t *state, mouse_
 }
 
 mouse_report_t create_mouse_report(device_t *state, mouse_values_t *values, int offset_x, int offset_y) {
+    output_t *current = &state->config.output[state->active_output];
     mouse_report_t report = {
         .buttons = values->buttons,
         .x = state->pointer_x,
@@ -263,6 +266,12 @@ mouse_report_t create_mouse_report(device_t *state, mouse_values_t *values, int 
     if (state->relative_mouse || state->gaming_mode) {
         report.x = offset_x;
         report.y = offset_y;
+
+        if (current->os == WINDOWS && state->relative_mouse && !state->gaming_mode) {
+            report.x = (int16_t)roundf((float)report.x / WINDOW_RELATIVE_DIVISOR);
+            report.y = (int16_t)roundf((float)report.y / WINDOW_RELATIVE_DIVISOR);
+        }
+        
         report.mode = RELATIVE;
     }
 
