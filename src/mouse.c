@@ -268,8 +268,10 @@ mouse_report_t create_mouse_report(device_t *state, mouse_values_t *values, int 
         report.y = offset_y;
 
         if (current->os == WINDOWS && state->relative_mouse && !state->gaming_mode) {
-            report.x = (int16_t)roundf((float)report.x / WINDOW_RELATIVE_DIVISOR);
-            report.y = (int16_t)roundf((float)report.y / WINDOW_RELATIVE_DIVISOR);
+            int32_t divisor = WINDOWS_RELATIVE_DIVISOR * 100 / current->relative_sensitivity;
+            divisor = divisor > 0 ? divisor : 1;
+            report.x = (int16_t)roundf((float)report.x / divisor);
+            report.y = (int16_t)roundf((float)report.y / divisor);
         }
         
         report.mode = RELATIVE;

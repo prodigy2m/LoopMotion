@@ -51,6 +51,7 @@ OUTPUT_ = [
     FormField(1004, "Mouse Acceleration", elem="label", style="Title"),
     FormField(2, "Speed X", 16, {"min": 1, "max": 100}, "int32", "range"),
     FormField(3, "Speed Y", 16, {"min": 1, "max": 100}, "int32", "range"),
+    FormField(13, "Relative Sensitivity", 100, {"min": 10, "max": 500}, "int32", "range"),
     # FormField(8, "Cursor Park Position", 0, {0: "Top", 1: "Bottom", 3: "Previous"}, "uint8"),
     FormField(1005, "Precision Screen Alignment", elem="label", style="Title"),
     FormField(4, "Border Top", None, {}, "int32"),

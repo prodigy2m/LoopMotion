@@ -43,6 +43,7 @@ typedef struct {
     uint32_t screen_index;     // Current active screen
     int32_t speed_x;           // Mouse speed per output, in direction X
     int32_t speed_y;           // Mouse speed per output, in direction Y
+    int32_t relative_sensitivity; // Relative mouse sensitivity multiplier (100 = 1.0x)
     border_size_t border;      // Screen border size/offset to keep cursor at same height when switching
     uint8_t os;                // Operating system on this output
     uint8_t pos;               // Screen position on this output
